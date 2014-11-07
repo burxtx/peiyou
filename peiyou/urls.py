@@ -6,5 +6,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^peiyou/training/', include('training.urls', namespace='training')),
+    url(r'^peiyou/exam/', include('exam.urls', namespace='exam')),
     url(r'^peiyou/admin/', include(admin.site.urls)),
 )

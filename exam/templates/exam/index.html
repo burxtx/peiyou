@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>测测你的睡仙指数</title>
+<link rel="stylesheet" type="text/css" href="/wechatapp/static/polls/css/reset.css">
+<link rel="stylesheet" type="text/css" href="/wechatapp/static/polls/css/index.css">
+</head>
+<body>
+    <div class="wrap">
+        <img src="/wechatapp/static/polls/img/test.png" class="font">
+        <form method="post" action="" id="dataForm">
+        {% csrf_token %}
+            <div class="sex clear">
+                <dl>
+                    <dt><img src="/wechatapp/static/polls/img/sex.png" alt=""></dt>
+                    <dd>
+                        <div class="a">
+                            <input type="radio" id="boy" name="gender" value="1">
+                            <label for="boy" class="boy_l"></label>
+                        </div>
+                        <div class="a">
+                            <input type="radio" id="lady" name="gender" value="0">
+                            <label for="lady" class="lady_l"></label>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><img src="/wechatapp/static/polls/img/age.png" alt=""></dt>
+                    <dd>
+                        <div class="b">
+                            <input type="radio" id="big" name="age" value="1">
+                            <label for="big" class="big_l"></label>
+                        </div>
+                        <div class="b">
+                            <input type="radio" id="little" name="age" value="0">
+                            <label for="little" class="little_l"></label>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <input class="on" type="button"/>
+        </form>
+    </div>
+</body>
+<script src="/wechatapp/static/polls/js/jquery.js"></script>
+<script type="text/javascript">
+    var boy = document.getElementById("boy");
+    var lady = document.getElementById("lady");
+    var big = document.getElementById("big");
+    var little = document.getElementById("little");
+    $(function() {
+        $('.boy_l').click(function(){
+            $(this).addClass("boy_l1");
+            $("#boy").attr("checked","checked");
+            $('.lady_l').removeClass("lady_l1");
+            $("#lady").attr("checked","");
+        });
+        $('.lady_l').click(function(){
+            $(this).addClass("lady_l1");
+            $("#lady").attr("checked","checked");
+            $('.boy_l').removeClass("boy_l1");
+            $("#boy").attr("checked","");
+        });
+        $('.big_l').click(function(){
+            $(this).addClass("big_l1");
+            $("#big").attr("checked","checked");
+            $('.little_l').removeClass("little_l1");
+            $("#little").attr("checked","");
+        });
+        $('.little_l').click(function(){
+            $(this).addClass("little_l1");
+            $("#little").attr("checked","checked");
+            $('.big_l').removeClass("big_l1");
+            $("#big").attr("checked","");
+        });
+        // $(".on").click(function(){
+        //     if(boy.checked == true&&lady.checked == false){
+        //         if((big.checked == true&&little.checked == false)||(big.checked == false&&little.checked == true)){
+        //             doPost();
+        //         }else{
+        //             window.location.href = "index.html";
+        //         }
+        //     }else if(boy.checked == false&&lady.checked == true){
+        //         if((big.checked == true&&little.checked == false)||(big.checked == false&&little.checked == true)){
+        //             doPost();
+        //         }else{
+        //             window.location.href = "index.html";
+        //         }
+        //     }else{
+        //         window.location.href = "index.html";
+        //     }
+        // })
+        $(".on").click(function(){   
+            if((boy.checked == false&&lady.checked == false)||(big.checked == false&&little.checked == false)){
+                window.location.href="{% url 'polls:home' %}";
+            }else{
+                dataForm.submit();
+            }
+        })
+    });
+</script>
+<script>
+    // $("body").data("q", {{q}});
+    // $("body").data("num", {{num}});
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    // function doPost(){
+        // var q = $("body").data("q");
+        // var num = $("body").data("num");
+        // var gender = $("input[name='gender'][checked]").val();
+        // var age = $("input[name='age'][checked]").val();
+        // var url = "{% url 'polls:home' %}";
+        // var data = {
+        //     "gender": gender,
+        //     "age": age,
+        //     "csrfmiddlewaretoken": csrftoken
+        // }
+        // $.post(url,data,function(){
+        //     window.location.replace("{% url 'polls:question' %}?pid=1");
+        // })
+        // window.location.replace("{% url 'polls:question' %}?pid=1")
+    // }
+</script>
+<script src="http://static.jiutianwai.com/static/js/wx_share.js"></script>
+<script type="text/javascript">
+    var APPID = "wxff35be27e6a08ec6";
+    var REDIRECT_URI = encodeURIComponent("http://co.jiutianwai.com/wechatapp/polls/home?pid=1");
+    var SCOPE = "snsapi_userinfo";
+    var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+APPID+"&redirect_uri="+REDIRECT_URI+"&response_type=code&scope="+SCOPE+"&state=STATE#wechat_redirect"
+    var imgUrl = "http://co.jiutianwai.com/wechatapp/static/polls/img/aaa.jpg";
+    var lineLink = url;
+    var descContent = '';
+    var shareTitle = '测测你的睡仙指数';
+    var appid = '';
+</script>
+</html>

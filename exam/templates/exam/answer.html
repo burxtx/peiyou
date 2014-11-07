@@ -1,0 +1,11 @@
+<p class="question" id="{{question.id}}">
+    &nbsp;(&nbsp;<span>{{ question.qindex }}</span>&nbsp;)&nbsp;{{ question.question_desc }}
+</p>
+<div class="answer">
+    {% for choice in choices %}
+    <div class="clear clear1">
+        <input id="{{choice.id}}" class="vote" name="vote" type="radio">
+        <label>{{ choice.choice_desc }}</label>
+    </div>
+    {% endfor %}
+</div>
