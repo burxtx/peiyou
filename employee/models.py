@@ -1,5 +1,9 @@
 from django.db import models
 
+CORE = 1
+COMMON = 0
+OPTION_CHOICE = (
+    (CORE, "核心员工"),(COMMON, "普通员工"))
 # Create your models here.
 class Employee(models.Model):
     """docstring for Employee"""
@@ -11,11 +15,9 @@ class Employee(models.Model):
     birtyday_solar = models.DateField(null=True, blank=True)
     # 年会视频模块
     addr = models.CharField(null=True, blank=True)
-    # 培训模块，测试的最高分数
-    exam_score = models.IntegerField(null=True, blank=True)
 
     # 员工级别，核心员工为？级以上
-    grade = models.IntegerField(null=True, blank=True)
+    grade = models.IntegerField(choices=OPTION_CHOICE, null=True, blank=True)
 
     openid = models.CharField(max_length=500, null=True, blank=True)
     nickname = models.CharField(max_length=200, null=True, blank=True)

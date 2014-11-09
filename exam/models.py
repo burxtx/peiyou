@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.conf import settings
+from Employee import *
 # Create your models here.
 
 A = 1
@@ -16,6 +17,13 @@ OPTION_CHOICE = (
     (A, "A"),(B, "B"),(C, "C"),(D, "D"),(E, "E"),(F, "F"),
     (G, "G"),(H, "H"),(I, "I"),(J, "J"),)
 # Create your models here.
+
+class UserProfile(models.Model):
+    """docstring for UserProfile"""
+    userprofile = models.ForeignKey(Employee)
+    def __unicode__(self):
+        return self.paper_name
+
 class Paper(models.Model):
     """docstring for Paper"""
     paper_name = models.CharField(max_length=100)
@@ -23,6 +31,7 @@ class Paper(models.Model):
     paper_type = models.IntegerField(null=True,blank=True,verbose_name="paper type")
     def __unicode__(self):
         return self.paper_name
+
 
 class Question(models.Model):
     """docstring for Question"""
@@ -60,15 +69,26 @@ class Choice(models.Model):
     def __unicode__(self):
         return self.choice_desc
 
+class AnswerSheet(models.Model):
+    """docstring for AnswerSheet"""
+    paper = models.ForeignKey(Paper, null=True, blank=True)
+    userprofile = models.ForeignKey(UserProfile, null=True, blank=True)
+    submit_time = models.DateTimeField(auto_now_add=True)
+    score = models.IntegerField(null=True, blank=True)
+    # def __unicode__(self):
+    #     return self.choice
+
 class Answer(models.Model):
     """docstring for Answer"""
-    paper = models.ForeignKey(Paper, null=True, blank=True)
+    answersheet = models.ForeignKey(AnswerSheet, null=True, blank=True)
     question = models.ForeignKey(Question, null=True, blank=True)
     # 多选是多对多关系
     # choice = models.ManyToMany(Choice, null=True, blank=True)
     # 多选是多对一关系
+    value = models.ForeignKey(Value, null=True, blank=True)
     choice = models.ForeignKey(Choice, null=True, blank=True)
-    employee = models.ForeignKey(Employee, null=True, blank=True)
+    userprofile = models.ForeignKey(UserProfile, null=True, blank=True)
     submit_time = models.DateTimeField(auto_now_add=True)
-    def __unicode__(self):
-        return self.choice
+    # def __unicode__(self):
+    #     return self.choice
+
